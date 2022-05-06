@@ -3,7 +3,7 @@
 exclude: |
     (?x)^(
         versioneer.py|
-        krtc/_version.py|
+        psdm_qs_cli/_version.py|
     )$
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
