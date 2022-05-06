@@ -8,7 +8,7 @@ source:
   path : ..
 
 build:
-  number: 2
+  number: 0
   noarch: python
   entry_points:
     - QSGenerateExcelSpreadSheet.py = psdm_qs_cli.QSGenerateExcelSpreadSheet:main

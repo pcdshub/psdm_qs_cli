@@ -1,5 +1,6 @@
-import versioneer
 from setuptools import setup
+
+import versioneer
 
 with open('requirements.txt', 'rt') as f:
     requirements = f.read().splitlines()
@@ -16,7 +17,7 @@ setup(
     packages=["psdm_qs_cli"],
     entry_points={
         "console_scripts": [
-            "QSGenerateExcelSpreadSheet.py=psdm_qs_cli.QSGenerateExcelSpreadSheet:main",
+            "QSGenerateExcelSpreadSheet.py=psdm_qs_cli.QSGenerateExcelSpreadSheet:main",  # noqa
             "QSGenerateJSON.py=psdm_qs_cli.QSGenerateJSON:main",
         ],
     },

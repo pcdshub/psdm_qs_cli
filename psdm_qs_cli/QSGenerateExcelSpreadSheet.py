@@ -1,14 +1,16 @@
 #!/usr/bin/env python
-'''Use the questionnaire client to generate a Excel spreadsheet.
-We take a list of attributes in a file, (names with mappings) and generate a row per proposal and a column per attribute.
-'''
+"""
+Use the questionnaire client to generate a Excel spreadsheet.
+We take a list of attributes in a file, (names with mappings) and generate a
+row per proposal and a column per attribute.
+"""
 
 import argparse
 import json
 import logging
+
 from openpyxl import Workbook
-from openpyxl.styles import colors
-from openpyxl.styles import Font, Color
+from openpyxl.styles import Font, colors
 
 from psdm_qs_cli import QuestionnaireClient
 
@@ -16,14 +18,16 @@ logging.basicConfig(level=logging.DEBUG)
 
 logger = logging.getLogger(__name__)
 
+
 def generateExcelSpreadSheetForRun(qs, run, attributes_file, excelFilePath):
-    '''
+    """
     Generate a Excel spreadsheet with data from a run.
     :param: qs - A Questionnaire client
-    :run: The number number/name; this is a string like run15 which is what the questionnaire uses in its URL
-    '''
-    column2Names = [('proposal_id', "Proposal")]
-    with open(attributes_file, 'r') as f:
+    :run: The number number/name; this is a string like run15 which is what the
+        questionnaire uses in its URL
+    """
+    column2Names = [("proposal_id", "Proposal")]
+    with open(attributes_file, "r") as f:
         attrs = json.load(f)
         column2Names.extend((x["attr"], x["label"]) for x in attrs)
 
@@ -34,7 +38,7 @@ def generateExcelSpreadSheetForRun(qs, run, attributes_file, excelFilePath):
 
     # Generate the header column using the 2 element in the column2Names tuples
     for clnum in range(len(column2Names)):
-        cl = ws.cell(row=1, column=clnum+1, value=column2Names[clnum][1])
+        cl = ws.cell(row=1, column=clnum + 1, value=column2Names[clnum][1])
         cl.font = fontStyle
 
     # Get a list of proposals
@@ -48,9 +52,11 @@ def generateExcelSpreadSheetForRun(qs, run, attributes_file, excelFilePath):
         for clnum in range(len(column2Names)):
             ckey = column2Names[clnum][0]
             if ckey in proposals[proposalid]:
-                _ = ws.cell(row=rowNum+1, column=clnum+1, value=proposals[proposalid][ckey])
+                _ = ws.cell(
+                    row=rowNum + 1, column=clnum + 1, value=proposals[proposalid][ckey]
+                )
             else:
-                _ = ws.cell(row=rowNum+1, column=clnum+1, value='')
+                _ = ws.cell(row=rowNum + 1, column=clnum + 1, value="")
         rowNum = rowNum + 1
 
     wb.save(excelFilePath)
@@ -58,19 +64,31 @@ def generateExcelSpreadSheetForRun(qs, run, attributes_file, excelFilePath):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Load data from the questionnaire into a an Excel spreadsheet')
-    parser.add_argument('--questionnaire_url', default="https://pswww.slac.stanford.edu/ws-kerb/questionnaire")
-    parser.add_argument('--no_kerberos', action="store_false")
-    parser.add_argument('--user')
-    parser.add_argument('--password')
-    parser.add_argument('run')
-    parser.add_argument('attributes_file', help='A JSON file with an array of dicts; each of which has a attrname and a label.')
-    parser.add_argument('excelFilePath')
+    parser = argparse.ArgumentParser(
+        description="Load data from the questionnaire into a an Excel spreadsheet"
+    )
+    parser.add_argument(
+        "--questionnaire_url",
+        default="https://pswww.slac.stanford.edu/ws-kerb/questionnaire",
+    )
+    parser.add_argument("--no_kerberos", action="store_false")
+    parser.add_argument("--user")
+    parser.add_argument("--password")
+    parser.add_argument("run")
+    parser.add_argument(
+        "attributes_file",
+        help="A JSON file with an array of dicts; each of which has a attrname and a label.",
+    )
+    parser.add_argument("excelFilePath")
     args = parser.parse_args()
 
-    qs = QuestionnaireClient(args.questionnaire_url, args.no_kerberos, user=args.user, pw=args.password)
-    generateExcelSpreadSheetForRun(qs, args.run, args.attributes_file, args.excelFilePath)
+    qs = QuestionnaireClient(
+        args.questionnaire_url, args.no_kerberos, user=args.user, pw=args.password
+    )
+    generateExcelSpreadSheetForRun(
+        qs, args.run, args.attributes_file, args.excelFilePath
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
