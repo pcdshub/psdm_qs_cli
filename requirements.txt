@@ -1,4 +1,4 @@
-krtc
+lcls-krtc
 six
 requests
 openpyxl
