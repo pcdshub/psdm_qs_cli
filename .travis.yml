@@ -1,52 +1,32 @@
-language: python
-sudo: false
+version: ~> 1.0
 
 env:
   global:
-    - OFFICIAL_REPO="slaclab/psdm_qs_cli"
+    - secure: ""
 
-matrix:
-  include:
-    - python: 2.7
-    - python: 3.5
-    - python: 3.6
-    - python: 3.7
-    - python: 3.8
+    # enable the usage of versions menu which allow versioning of the docs
+    # pages and not only the master branch
+    - DOCTR_VERSIONS_MENU="1"
+    # Dependency files used to build the documentation (space separated)
+    - DOCS_REQUIREMENTS="dev-requirements.txt"
+    # Options to be passed to flake8 for package linting. Usually this is just
+    # the package name but you can enable other flake8 options via this config
+    - PYTHON_LINT_OPTIONS="psdm_qs_cli"
 
+    # The name of the conda package
+    - CONDA_PACKAGE="psdm_qs_cli"
+    # The folder containing the conda recipe (meta.yaml)
+    - CONDA_RECIPE_FOLDER="conda-recipe"
+    # Extra dependencies needed to run the tests which are not included
+    # at the recipe and dev-requirements.txt. E.g. PyQt
+    # pandoc/pypandoc - used to translate README.md for sphinx
+    - CONDA_EXTRAS="pip"
+    # Requirements file with contents for tests dependencies
+    - CONDA_REQUIREMENTS="dev-requirements.txt"
 
-install:
-  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - hash -r
-  - conda config --set always_yes yes --set changeps1 no
-  - conda install conda-build
-  - conda update -q conda conda-build
-  - conda config --append channels conda-forge
-  - conda config --append channels pcds-tag
-  # Useful for debugging any issues with conda
-  - conda info -a
-  # Test conda build
-  - conda build -q recipe --python $TRAVIS_PYTHON_VERSION --output-folder bld-dir
-  - conda config --add channels "file://`pwd`/bld-dir"
-  # Create test environment`
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION psdm_qs_cli --file dev-requirements.txt
-  - source activate test-environment
+    # Extra dependencies needed to run the test with Pip (similar to
+    # CONDA_EXTRAS) but for pip
+    - PIP_EXTRAS="."
 
-script:
-  - python run_tests.py
-
-after_success:
-  - |
-    if [[ $TRAVIS_PULL_REQUEST == false && $TRAVIS_REPO_SLUG == $OFFICIAL_REPO && $TRAVIS_BRANCH == $TRAVIS_TAG  && $TRAVIS_TAG != '' && $CONDA_UPLOAD_TOKEN_TAG != '' ]]; then
-      conda install anaconda-client
-      export ANACONDA_API_TOKEN=$CONDA_UPLOAD_TOKEN_TAG
-      anaconda upload bld-dir/noarch/*.tar.bz2
-    fi
-
-  - |
-    if [[ $TRAVIS_PULL_REQUEST == false && $TRAVIS_REPO_SLUG == $OFFICIAL_REPO && $TRAVIS_BRANCH == 'master' && $TRAVIS_TAG == '' && $CONDA_UPLOAD_TOKEN_DEV != '' ]]; then
-      conda install anaconda-client
-      export ANACONDA_API_TOKEN=$CONDA_UPLOAD_TOKEN_DEV
-      anaconda upload bld-dir/noarch/*.tar.bz2
-    fi
+import:
+  - pcdshub/pcds-ci-helpers:travis/shared_configs/standard-python-conda.yml
