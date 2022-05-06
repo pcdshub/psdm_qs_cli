@@ -2,13 +2,13 @@
 '''
 Various web service calls to the Questionnaire backend to get data for reporting.
 '''
-import json
-import requests
 import datetime
-import logging
 import getpass
+import json
+import logging
 from functools import partial
 
+import requests
 from six.moves.urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)

@@ -6,9 +6,9 @@ We take a list of attributes in a file, (names with mappings) and generate a row
 import argparse
 import json
 import logging
+
 from openpyxl import Workbook
-from openpyxl.styles import colors
-from openpyxl.styles import Font, Color
+from openpyxl.styles import Color, Font, colors
 
 from psdm_qs_cli import QuestionnaireClient
 
