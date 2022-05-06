@@ -2,7 +2,7 @@ version: ~> 1.0
 
 env:
   global:
-    - secure: ""
+    - secure: "YOHsIeL9YaHqJtgxGXG0ZP13s9ZCx3Q0oRlaIjEYM4vgcKoWmgmGn0SZaXXGeMMus5XJDm7HxS7/MmT1ddv7n+vzUGVxPh3moC2tIv5N4KbwuG+lgrw97qIPeKtd2CE0D+J3qpKnZh9DnBvGYmfNLalb9JHwVei16qPOUE802YSXogoLXESjI/dFkcSTGiPeCIjuRSpdVytDFx7H3JDukqgjuOUYoqyErsfIAxC0QMA8Fr6Cn8GMvuo9tbx8pB/xePM9VXl1gnhz8eHS9bF+zicnCK18X9OELAKpEmrU2r2MJU4pExOem8OAo3XVNi8mSWInWMeMiwJDGm/2/i4WKqUci0ri2tOEOzU020eiSY6430w3+KcRcB1G3VRB5TgEQaTnwk8Gi5+wWm33BlN6XhSzm0ZLswhyLS/1AVc1VCbVcQCv/U9Exe6WblLfLYzM7dgObqzLkJtbkUcZfucRsIkXS0rg0V1Qd4YTGjO7PV4sg4grQix1aQYgYSbMB+sAqNObka3GLBb2E6VAk5/1h2U1bdUM7H5IEuYwKm9am9jz7gcbXEhLSb2RzVF4hJrGT2xbwWSyO/S/wf7X9GtbOZe9pMgwOGvZ+HSxenXMpT/8bH9zyE0yYi30XCjvndlAk8SVfgFArEVQuD6R6u3PeuPagBMH/FVyKRaOenuc6Os="
 
     # enable the usage of versions menu which allow versioning of the docs
     # pages and not only the master branch
