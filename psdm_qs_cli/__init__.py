@@ -1,6 +1,5 @@
-from . import _version
+from .version import __version__  # noqa: F401
 from .QuestionnaireClient import QuestionnaireClient
 
-__version__ = _version.get_versions()['version']
 
 __all__ = ["QuestionnaireClient"]
