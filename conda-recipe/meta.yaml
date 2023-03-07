@@ -24,6 +24,12 @@ requirements:
   - krtc
   - requests
 
+test:
+  requires:
+    - pytest
+  imports:
+    - {{ import_name }}
+
 about:
   home: https://github.com/slaclab/psdm_qs_cli.git
   license: MIT License
