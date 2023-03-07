@@ -6,9 +6,9 @@ import datetime
 import getpass
 import logging
 from functools import partial
+from urllib.parse import urlparse
 
 import requests
-from six.moves.urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)
 
