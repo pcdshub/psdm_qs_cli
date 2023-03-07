@@ -27,7 +27,7 @@ def generateExcelSpreadSheetForRun(qs, run, attributes_file, excelFilePath):
         questionnaire uses in its URL
     """
     column2Names = [("proposal_id", "Proposal")]
-    with open(attributes_file, "r") as f:
+    with open(attributes_file) as f:
         attrs = json.load(f)
         column2Names.extend((x["attr"], x["label"]) for x in attrs)
 
