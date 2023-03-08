@@ -6,9 +6,9 @@ import datetime
 import getpass
 import logging
 from functools import partial
+from urllib.parse import urlparse
 
 import requests
-from six.moves.urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)
 
@@ -152,7 +152,7 @@ class QuestionnaireClient:
                 "hutch-be-sam-d": "Be-AIR",
             }.items():
                 tpls = sorted(
-                    [
+                    (
                         (
                             c["id"]
                             .split("-")[3]
@@ -164,7 +164,7 @@ class QuestionnaireClient:
                         )
                         for c in proposalData.get("hutch", [])
                         if c["id"].startswith(belocid) and int(c["val"])
-                    ],
+                    ),
                     key=lambda x: (x[0], int(x[1])),
                 )
                 if tpls:
@@ -176,10 +176,10 @@ class QuestionnaireClient:
                         ]
                     )
                     tpls = [x + (h_or_v,) if x[0] == "1D" else x for x in tpls]
-                    ret[repid] = "  ".join(("".join(_) for _ in tpls))
+                    ret[repid] = "  ".join("".join(_) for _ in tpls)
             combined_be = "\n".join(
                 [
-                    "{}:{}".format(fnl_be_attr, ret[fnl_be_attr])
+                    f"{fnl_be_attr}:{ret[fnl_be_attr]}"
                     for fnl_be_attr in ["Be-TOP", "Be-MID", "Be-BTM", "Be-AIR"]
                     if fnl_be_attr in ret
                 ]
