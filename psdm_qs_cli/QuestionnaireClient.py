@@ -337,8 +337,7 @@ class QuestionnaireClient:
         Given an experiment name, try to get the best guess as to the proposal_id and run period.
         """
         r = self.rget(
-            self.questionnaire_url + "ws/questionnaire/lookupByExperimentName",
-            {"experiment_name": experiment_name},
+            "https://pswww.slac.stanford.edu/ws-kerb/lgbk/lgbk/ws/experiments_to_proposal"
         )
         if r.status_code <= 299:
             return r.json()
