@@ -339,8 +339,13 @@ class QuestionnaireClient:
         r = self.rget(
             "https://pswww.slac.stanford.edu/ws-kerb/lgbk/lgbk/ws/experiments_to_proposal"
         )
+        # parse through by experiment name and return info
+
         if r.status_code <= 299:
-            return r.json()
+            try:
+                return (r.json()['value'].get(experiment_name))
+            except Exception:
+                raise Exception("Could not find experiment.")
         else:
             raise Exception("Invalid HTTP status code from server", r.status_code)
 
