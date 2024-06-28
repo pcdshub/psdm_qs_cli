@@ -343,8 +343,8 @@ class QuestionnaireClient:
 
         if r.status_code <= 299:
             try:
-                return (r.json()['value'].get(experiment_name))
-            except Exception:
+                return r.json()['value'][experiment_name]
+            except KeyError:
                 raise Exception("Could not find experiment.")
         else:
             raise Exception("Invalid HTTP status code from server", r.status_code)
